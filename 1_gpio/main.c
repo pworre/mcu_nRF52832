@@ -36,18 +36,29 @@ int main(){
 	}
 
 	// Configure buttons -> see button_init()
-
+	button_init();
 	int sleep = 0;
 	while(1){
 
 		/* Check if button 1 is pressed;
 		 * turn on LED matrix if it is. */
-
+		int buttonOnePressed = !(GPIO->IN & (1 << SW0_bt));
+		int buttonTwoPressed = !(GPIO->IN & (1 << SW1_bt));
+		if (buttonOnePressed) {
+			for(int i = LED1_bt; i <= LED4_bt; i++){
+				GPIO->OUT &= ~(1 << i);
+			}
+		}
 		/* Check if button 2 is pressed;
 		 * turn off LED matrix if it is. */
+		if (buttonTwoPressed) {
+			for(int i = LED1_bt; i <= LED4_bt; i++){
+				GPIO->OUT |= (1 << i);
+			}
+		}
 
-		sleep = 10000;
-		while(--sleep); // Delay
+		//sleep = 10000;
+		//while(--sleep); // Delay
 	}
 	return 0;
 }
