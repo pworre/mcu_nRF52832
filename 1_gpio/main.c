@@ -1,10 +1,10 @@
 #include <stdint.h>
 
 #define GPIO ((NRF_GPIO_REGS*)0x50000000)
-#define SW0_bt 0
-#define SW1_bt 1
-#define LED1_bt 4
-#define LED4_bt 7
+#define SW0_bt 13
+#define SW1_bt 14
+#define LED1_bt 17
+#define LED4_bt 20
 
 
 typedef struct {
