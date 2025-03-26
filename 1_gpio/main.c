@@ -24,8 +24,8 @@ typedef struct {
 
 void button_init(){ 
 	// Setting both Buttons for pull up on pin and as outputs
-	GPIO->PIN_CNF[SW0_bt] = (3 << 2) | (1 << 0);
-	GPIO->PIN_CNF[SW1_bt] = (3 << 2) | (1 << 0);
+	GPIO->PIN_CNF[SW0_bt] = (3 << 2);
+	GPIO->PIN_CNF[SW1_bt] = (3 << 2);
 }
 
 int main(){
