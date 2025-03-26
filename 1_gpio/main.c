@@ -37,7 +37,7 @@ int main(){
 
 	// Configure buttons -> see button_init()
 	button_init();
-	int sleep = 0;
+	//int sleep = 0;
 	while(1){
 
 		/* Check if button 1 is pressed;
