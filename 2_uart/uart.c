@@ -8,12 +8,16 @@ typedef struct {
     volatile uint32_t TASKS_STOPRX;
     volatile uint32_t TASKS_STARTTX;
     volatile uint32_t TASKS_STOPTX;
-    volatile uint32_t RESERVED1[308];
+    volatile uint32_t RESERVED0[4];
+    volatile uint32_t EVENTS_TXDRDY;    
+    volatile uint32_t RESERVED1[288];
     volatile uint32_t ENABLE;
     volatile uint32_t PSELRTS;
     volatile uint32_t PSELTXD;
     volatile uint32_t PSELCTS;
     volatile uint32_t PSELRXD;
+    volatile uint32_t RXD;
+    volatile uint32_t TXD;    
     volatile uint32_t BAUDRATE;
 } NRF_UART_REG;
 
@@ -25,7 +29,7 @@ typedef struct {
 void uart_init(){
     GPIO->PIN_CNF[RXD_bt] &= ~(1 << 0);
     GPIO->PIN_CNF[TXD_bt] |= (1 << 0);
-    UART->ENABLE |= (8 << 0);
+    UART->ENABLE |= (4 << 0);
     UART->PSELRTS |= (1 << 31);
     UART->PSELCTS |= (1 << 31);
     UART->BAUDRATE = 0x00275000;
@@ -42,7 +46,11 @@ void uart_init(){
 
 void uart_send(char letter){
     UART->TASKS_STARTTX = 1;
-    GPIO->OUT |= (letter << TXD_bt);
+    UART->TXD = letter;
+
+    while(!(UART->EVENTS_TXDRDY));
+
+    UART->TASKS_STOPTX = 1;
 }
 
 char uart_read();
