@@ -1,8 +1,10 @@
 #include <stdint.h>
 
 #define GPIO ((NRF_GPIO_REGS*)0x50000000)
-#define SW0_bt 1
-#define SW1_bt 2
+#define SW0_bt 0
+#define SW1_bt 1
+#define LED1_bt 3
+#define LED4_bt 7
 
 
 typedef struct {
@@ -28,7 +30,7 @@ void button_init(){
 
 int main(){
 	// Configure LED Matrix
-	for(int i = 5; i <= 8; i++){
+	for(int i = LED1_bt; i <= LED4_bt; i++){
 		GPIO->DIRSET = (1 << i);
 		GPIO->OUTCLR = (1 << i);
 	}
