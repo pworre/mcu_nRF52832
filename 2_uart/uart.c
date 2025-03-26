@@ -8,7 +8,8 @@ typedef struct {
     volatile uint32_t TASKS_STOPRX;
     volatile uint32_t TASKS_STARTTX;
     volatile uint32_t TASKS_STOPTX;
-    volatile uint32_t RESERVED0[4];
+    volatile uint32_t RESERVED0[3];
+    volatile uint32_t EVENTS_RXDRDY;
     volatile uint32_t EVENTS_TXDRDY;    
     volatile uint32_t RESERVED1[288];
     volatile uint32_t ENABLE;
@@ -48,9 +49,21 @@ void uart_send(char letter){
     UART->TASKS_STARTTX = 1;
     UART->TXD = letter;
 
+    UART->EVENTS_RXDRDY = 0;
     while(!(UART->EVENTS_TXDRDY));
+    UART->EVENTS_RXDRDY = 0;
 
     UART->TASKS_STOPTX = 1;
 }
 
-char uart_read();
+char uart_read(){
+    UART->EVENTS_RXDRDY = 0;    // Nullstiller flagger
+    UART->TASKS_STARTRX = 1;
+
+    while (!(UART->EVENTS_RXDRDY));    
+    UART->EVENTS_RXDRDY = 0; 
+
+    UART->TASKS_STOPRX = 1;
+
+    return UART->RXD;
+}
