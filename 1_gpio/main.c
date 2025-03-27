@@ -46,7 +46,7 @@ int main(){
 		int buttonTwoPressed = !(GPIO->IN & (1 << SW1_bt));
 		if (buttonOnePressed) {
 			for(int i = LED1_bt; i <= LED4_bt; i++){
-				GPIO->OUT &= ~(1 << i);
+				GPIO->OUT |= (1 << i);
 			}
 		}
 		/* Check if button 2 is pressed;
