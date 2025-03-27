@@ -8,11 +8,11 @@ typedef struct {
     volatile uint32_t TASKS_STOPRX;
     volatile uint32_t TASKS_STARTTX;   
     volatile uint32_t TASKS_STOPTX;
-    volatile uint32_t RESERVED0[63];
+    volatile uint32_t RESERVED0[62];
     volatile uint32_t EVENTS_RXDRDY;
     volatile uint32_t RESERVED1; 
     volatile uint32_t EVENTS_TXDRDY;    
-    volatile uint32_t RESERVED2[249];
+    volatile uint32_t RESERVED2[248];
     volatile uint32_t ENABLE;
     volatile uint32_t PSELRTS;
     volatile uint32_t PSELTXD;
@@ -20,9 +20,8 @@ typedef struct {
     volatile uint32_t PSELRXD;
     volatile uint32_t BAUDRATE;
     volatile uint32_t RXD;
-    volatile uint32_t RESERVED3[4];
+    volatile uint32_t RESERVED3[3];
     volatile uint32_t TXD;    
-
 } NRF_UART_REG;
 
 #define RTS_bt 5
