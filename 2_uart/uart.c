@@ -58,7 +58,7 @@ void uart_send(char letter){
 }
 
 char uart_read(){
-    if (!UART->EVENTS_RXDRDY) {
+    if (!(UART->EVENTS_RXDRDY)) {
         return '\0';
     }
     UART->EVENTS_RXDRDY = 0;    // Nullstiller flagger
