@@ -30,18 +30,27 @@ typedef struct {
 #define RXD_bt 8
 
 void uart_init(){
-    GPIO->PIN_CNF[RXD_bt] &= ~(1 << 0);
-    GPIO->PIN_CNF[TXD_bt] |= (1 << 0);
+    //GPIO->PIN_CNF[RXD_bt] &= ~(1 << 0);
+    //GPIO->PIN_CNF[TXD_bt] |= (1 << 0);
+    GPIO->PIN_CNF[RXD_bt] = 1;
+    GPIO->PIN_CNF[TXD_bt] = 0;
     UART->ENABLE = 4;
-    UART->PSELRTS |= (1 << 31);
-    UART->PSELCTS |= (1 << 31);
+    //UART->PSELRTS |= (1 << 31);
+    //UART->PSELCTS |= (1 << 31);
+    UART->PSELRTS =~ 0;
+    UART->PSELCTS =~ 0;
     UART->BAUDRATE = 0x00275000;
 
+    UART->PSELTXD = TXD_bt;
+    UART->PSELRXD = RXD_bt;
+
+    /*
     // Setting pin number for TXD and connecting
     UART->PSELTXD &= ~(1 << 31);
     UART->PSELTXD |= (TXD_bt << 0);
     UART->PSELRXD &= ~(1 << 31);
     UART->PSELRXD |= (RXD_bt << 0);
+    */
 
     // Starting task for receiving messages
     UART->TASKS_STARTRX = 1;
