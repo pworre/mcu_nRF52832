@@ -25,6 +25,8 @@ int main(){
 
     button_init();
     uart_init();
+    int lightON = 0;
+            
     while(1){
         int buttonOnePressed = !(GPIO->IN & (1 << SW0_bt));
 		int buttonTwoPressed = !(GPIO->IN & (1 << SW1_bt));
@@ -33,7 +35,6 @@ int main(){
 		}else if (buttonTwoPressed) {
             uart_send('B');
 		}
-
         if (uart_read() != '\0'){
             for(int i = LED1_bt; i <= LED4_bt; i++){
                 GPIO->OUT ^= (1 << i);
