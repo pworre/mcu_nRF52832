@@ -29,7 +29,7 @@ int main(){
     for(int i = LED1_bt; i <= LED4_bt; i++){
 		GPIO->OUT |= (1 << i);
 	}
-
+    int sleep = 0;
     while(1){
         int buttonOnePressed = !(GPIO->IN & (1 << SW0_bt));
 		int buttonTwoPressed = !(GPIO->IN & (1 << SW1_bt));
@@ -44,7 +44,8 @@ int main(){
                 GPIO->OUT ^= (1 << i);
 	        }
         }
-        
+        sleep = 10000;
+		while(--sleep); // Delay
     }
 
     return 0;
