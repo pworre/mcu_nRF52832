@@ -23,7 +23,7 @@ int main(){
 		GPIO->OUTCLR = (1 << i);
 	}
 
-
+    button_init();
     uart_init();
     while(1){
         int buttonOnePressed = !(GPIO->IN & (1 << SW0_bt));
