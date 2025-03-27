@@ -6,20 +6,23 @@
 typedef struct {
     volatile uint32_t TASKS_STARTRX;
     volatile uint32_t TASKS_STOPRX;
-    volatile uint32_t TASKS_STARTTX;
+    volatile uint32_t TASKS_STARTTX;   
     volatile uint32_t TASKS_STOPTX;
-    volatile uint32_t RESERVED0[3];
+    volatile uint32_t RESERVED0[63];
     volatile uint32_t EVENTS_RXDRDY;
+    volatile uint32_t RESERVED1; 
     volatile uint32_t EVENTS_TXDRDY;    
-    volatile uint32_t RESERVED1[288];
+    volatile uint32_t RESERVED2[249];
     volatile uint32_t ENABLE;
     volatile uint32_t PSELRTS;
     volatile uint32_t PSELTXD;
     volatile uint32_t PSELCTS;
     volatile uint32_t PSELRXD;
-    volatile uint32_t RXD;
-    volatile uint32_t TXD;    
     volatile uint32_t BAUDRATE;
+    volatile uint32_t RXD;
+    volatile uint32_t RESERVED3[4];
+    volatile uint32_t TXD;    
+
 } NRF_UART_REG;
 
 #define RTS_bt 5
@@ -58,17 +61,12 @@ void uart_send(char letter){
 }
 
 char uart_read(){
-    if (!(UART->EVENTS_RXDRDY)) {
-        return '\0';
+    char letter;
+    if (UART->EVENTS_RXDRDY){
+        letter = UART->RXD;
+        UART->EVENTS_RXDRDY = 0;
+    } else {
+        letter = '\0';
     }
-    //UART->EVENTS_RXDRDY = 0;    // Nullstiller flagger
-    //UART->TASKS_STARTRX = 1;
-
-    //while (!(UART->EVENTS_RXDRDY));
-    char letter = UART->RXD;
-    UART->EVENTS_RXDRDY = 0; 
-
-    //UART->TASKS_STOPRX = 1;   Stod i oppg
-
     return letter;
 }
