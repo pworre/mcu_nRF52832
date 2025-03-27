@@ -99,12 +99,12 @@ void uart_init(){
     */
 
     // Starting task for receiving messages
-    UART->TASKS_STARTRX = 1;
+    UART->TASKS_STARTRX = 0;
 }
 
 void uart_send(char letter){
     UART->EVENTS_TXDRDY = 0;
-    UART->TASKS_STARTTX = 1;
+    UART->TASKS_STARTTX = 0;
     //UART->EVENTS_TXDRDY = 0;
     UART->TXD = letter;
 
@@ -117,6 +117,7 @@ void uart_send(char letter){
 }
 
 char uart_read(){
+    UART->TASKS_STARTRX = 0;
     char letter;
     if (UART->EVENTS_RXDRDY){
         letter = UART->RXD;
