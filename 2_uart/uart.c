@@ -78,7 +78,7 @@ typedef struct {
 void uart_init(){
     //GPIO->PIN_CNF[RXD_bt] &= ~(1 << 0);
     //GPIO->PIN_CNF[TXD_bt] |= (1 << 0);
-    GPIO->PIN_CNF[RXD_bt] = 0;
+    GPIO->PIN_CNF[RXD_bt] = (0 << 0) | (3 << 2);  // Input med pull-up
     GPIO->PIN_CNF[TXD_bt] = 1;
     UART->ENABLE = 4;
     UART->PSELRTS = (1 << 31);
@@ -108,6 +108,7 @@ void uart_send(char letter){
     //UART->EVENTS_TXDRDY = 0;
     UART->TXD = letter;
 
+    UART->EVENTS_TXDRDY = 0; 
     while(!(UART->EVENTS_TXDRDY));
     UART->EVENTS_TXDRDY = 0;
     
