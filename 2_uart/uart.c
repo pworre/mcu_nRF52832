@@ -47,7 +47,7 @@ void uart_init(){
 
 void uart_send(char letter){
     UART->TASKS_STARTTX = 1;
-    UART->EVENTS_TXDRDY = 0;
+    //UART->EVENTS_TXDRDY = 0;
     UART->TXD = letter;
 
     while(!(UART->EVENTS_TXDRDY));
@@ -64,11 +64,11 @@ char uart_read(){
     UART->EVENTS_RXDRDY = 0;    // Nullstiller flagger
     //UART->TASKS_STARTRX = 1;
 
-    while (!(UART->EVENTS_RXDRDY));
-    uint32_t msg = UART->RXD;
+    //while (!(UART->EVENTS_RXDRDY));
+    char letter = UART->RXD;
     UART->EVENTS_RXDRDY = 0; 
 
     //UART->TASKS_STOPRX = 1;   Stod i oppg
 
-    return msg;
+    return letter;
 }
