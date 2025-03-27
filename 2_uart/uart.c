@@ -81,8 +81,8 @@ void uart_init(){
     GPIO->PIN_CNF[RXD_bt] = (0 << 0) | (3 << 2);  // Input med pull-up
     GPIO->PIN_CNF[TXD_bt] = 1;
     UART->ENABLE = 4;
-    UART->PSELRTS = (1 << 31);
-    UART->PSELCTS = (1 << 31);
+    UART->PSELRTS = 0xFFFFFFFF;
+    UART->PSELCTS = 0xFFFFFFFF;
     //UART->PSELRTS =~ 0;
     //UART->PSELCTS =~ 0;
     UART->BAUDRATE = 0x00275000;
@@ -90,21 +90,14 @@ void uart_init(){
     UART->PSELTXD = TXD_bt;
     UART->PSELRXD = RXD_bt;
 
-    /*
-    // Setting pin number for TXD and connecting
-    UART->PSELTXD &= ~(1 << 31);
-    UART->PSELTXD |= (TXD_bt << 0);
-    UART->PSELRXD &= ~(1 << 31);
-    UART->PSELRXD |= (RXD_bt << 0);
-    */
 
     // Starting task for receiving messages
-    UART->TASKS_STARTRX = 0;
+    UART->TASKS_STARTRX = 1;
 }
 
 void uart_send(char letter){
     UART->EVENTS_TXDRDY = 0;
-    UART->TASKS_STARTTX = 0;
+    UART->TASKS_STARTTX = 1;
     //UART->EVENTS_TXDRDY = 0;
     UART->TXD = letter;
 
@@ -117,7 +110,7 @@ void uart_send(char letter){
 }
 
 char uart_read(){
-    UART->TASKS_STARTRX = 0;
+    UART->TASKS_STARTRX = 1;
     char letter;
     if (UART->EVENTS_RXDRDY){
         letter = UART->RXD;
