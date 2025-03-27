@@ -52,18 +52,22 @@ void uart_send(char letter){
     UART->EVENTS_RXDRDY = 0;
     while(!(UART->EVENTS_TXDRDY));
     UART->EVENTS_RXDRDY = 0;
+    
 
     UART->TASKS_STOPTX = 1;
 }
 
 char uart_read(){
+    if (!UART->EVENTS_RXDRDY) {
+        return '\0';
+    }
     UART->EVENTS_RXDRDY = 0;    // Nullstiller flagger
-    UART->TASKS_STARTRX = 1;
+    //UART->TASKS_STARTRX = 1;
 
     while (!(UART->EVENTS_RXDRDY));    
     UART->EVENTS_RXDRDY = 0; 
 
-    UART->TASKS_STOPRX = 1;
+    //UART->TASKS_STOPRX = 1;   Stod i oppg
 
     return UART->RXD;
 }
