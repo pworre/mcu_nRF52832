@@ -13,6 +13,7 @@ void button_init(){
 }
 
 int main(){
+    uart_init();
     while(1){
         int buttonOnePressed = !(GPIO->IN & (1 << SW0_bt));
 		int buttonTwoPressed = !(GPIO->IN & (1 << SW1_bt));
