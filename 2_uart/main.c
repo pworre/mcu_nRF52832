@@ -34,7 +34,7 @@ int main(){
             uart_send('B');
 		}
 
-        if (uart_read() != '/0'){
+        if (uart_read() != '\0'){
             for(int i = LED1_bt; i <= LED4_bt; i++){
                 GPIO->OUT ^= (1 << i);
 	        }
