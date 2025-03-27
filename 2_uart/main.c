@@ -17,9 +17,9 @@ int main(){
         int buttonOnePressed = !(GPIO->IN & (1 << SW0_bt));
 		int buttonTwoPressed = !(GPIO->IN & (1 << SW1_bt));
 		if (buttonOnePressed) {
-            uart_send("A");
+            uart_send('A');
 		}else if (buttonTwoPressed) {
-            uart_send("B");
+            uart_send('B');
 		}
     }
 
