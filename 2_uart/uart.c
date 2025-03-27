@@ -65,10 +65,10 @@ char uart_read(){
     //UART->TASKS_STARTRX = 1;
 
     while (!(UART->EVENTS_RXDRDY));
-    
+    uint32_t msg = UART->RXD;
     UART->EVENTS_RXDRDY = 0; 
 
     //UART->TASKS_STOPRX = 1;   Stod i oppg
 
-    return UART->RXD;
+    return msg;
 }
