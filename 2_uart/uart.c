@@ -32,7 +32,7 @@ typedef struct {
 void uart_init(){
     GPIO->PIN_CNF[RXD_bt] &= ~(1 << 0);
     GPIO->PIN_CNF[TXD_bt] |= (1 << 0);
-    UART->ENABLE |= (4 << 0);
+    UART->ENABLE = 4;
     UART->PSELRTS |= (1 << 31);
     UART->PSELCTS |= (1 << 31);
     UART->BAUDRATE = 0x00275000;
