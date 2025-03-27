@@ -4,6 +4,8 @@
 
 #define SW0_bt 13
 #define SW1_bt 14
+#define LED1_bt 17
+#define LED4_bt 20
 
 
 void button_init(){ 
@@ -12,7 +14,16 @@ void button_init(){
 	GPIO->PIN_CNF[SW1_bt] = (3 << 2);
 }
 
+
+
 int main(){
+    // Configure LED Matrix
+	for(int i = LED1_bt; i <= LED4_bt; i++){
+		GPIO->DIRSET = (1 << i);
+		GPIO->OUTCLR = (1 << i);
+	}
+
+
     uart_init();
     while(1){
         int buttonOnePressed = !(GPIO->IN & (1 << SW0_bt));
@@ -22,6 +33,12 @@ int main(){
 		}else if (buttonTwoPressed) {
             uart_send('B');
 		}
+
+        if (uart_read() != '/0'){
+            for(int i = LED1_bt; i <= LED4_bt; i++){
+                GPIO->OUT ^= (1 << i);
+	        }
+        }
     }
 
     return 0;
