@@ -25,7 +25,10 @@ int main(){
 
     button_init();
     uart_init();
-    //int lightON = 0;
+    int lightON = 0;
+    for(int i = LED1_bt; i <= LED4_bt; i++){
+		GPIO->OUT &= ~(1 << i);
+	}
 
     while(1){
         int buttonOnePressed = !(GPIO->IN & (1 << SW0_bt));
