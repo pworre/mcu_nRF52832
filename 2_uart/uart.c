@@ -61,7 +61,7 @@ char uart_read(){
     if (!(UART->EVENTS_RXDRDY)) {
         return '\0';
     }
-    UART->EVENTS_RXDRDY = 0;    // Nullstiller flagger
+    //UART->EVENTS_RXDRDY = 0;    // Nullstiller flagger
     //UART->TASKS_STARTRX = 1;
 
     //while (!(UART->EVENTS_RXDRDY));
