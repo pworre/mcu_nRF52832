@@ -120,5 +120,6 @@ char uart_read(){
         letter = '\0';  // Bruker på alle for å si at ferdig
         // Denne brukes også på slutten av string i form av char* :     h e l l o \o
     }
+    UART->TASKS_STOPRX;
     return letter;
 }
