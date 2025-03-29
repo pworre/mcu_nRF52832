@@ -35,7 +35,7 @@ int main(){
         int buttonOnePressed = !(GPIO->IN & (1 << SW0_bt));
 		int buttonTwoPressed = !(GPIO->IN & (1 << SW1_bt));
 		if (buttonOnePressed) {
-            GPIO->OUT ^= (1 << LED1_bt);
+            //GPIO->OUT ^= (1 << LED1_bt);
             uart_send('A');
 		}else if (buttonTwoPressed) {
             uart_send('B');
