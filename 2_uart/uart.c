@@ -112,7 +112,6 @@ void uart_send(char letter){
 char uart_read(){
     UART->TASKS_STARTRX = 1;
     char letter;
-    while (UART->EVENTS_RXDRDY == 0);
     if (UART->EVENTS_RXDRDY){
         letter = UART->RXD;
         UART->EVENTS_RXDRDY = 0;
