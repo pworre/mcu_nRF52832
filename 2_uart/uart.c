@@ -96,13 +96,13 @@ void uart_init(){
 }
 
 void uart_send(char letter){
-    UART->EVENTS_TXDRDY = 0;
     UART->TASKS_STARTTX = 1;
-    //UART->EVENTS_TXDRDY = 0;
+    
     UART->TXD = letter;
 
-    UART->EVENTS_TXDRDY = 0; 
-    while(!(UART->EVENTS_TXDRDY));
+    
+    while(UART->EVENTS_TXDRDY == 0);
+
     UART->EVENTS_TXDRDY = 0;
     
 
@@ -112,11 +112,13 @@ void uart_send(char letter){
 char uart_read(){
     UART->TASKS_STARTRX = 1;
     char letter;
+    while (UART->EVENTS_RXDRDY == 0);
     if (UART->EVENTS_RXDRDY){
         letter = UART->RXD;
         UART->EVENTS_RXDRDY = 0;
     } else {
-        letter = '\0';
+        letter = '\0';  // Bruker på alle for å si at ferdig
+        // Denne brukes også på slutten av string i form av char* :     h e l l o \o
     }
     return letter;
 }
