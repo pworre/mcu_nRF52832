@@ -6,7 +6,6 @@
 #define LED1_bt 17
 #define LED4_bt 20
 #define SW0_bt 13
-#define SW1_bt 14
 
 
 void LED_init(){ 
@@ -21,7 +20,6 @@ void LED_init(){
 void button_init(){ 
 	// Setting both Buttons for pull up on pin and as outputs
 	GPIO->PIN_CNF[SW0_bt] = (3 << 2);
-	GPIO->PIN_CNF[SW1_bt] = (3 << 2);
 }
 
 int main(){
