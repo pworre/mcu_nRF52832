@@ -28,6 +28,7 @@ int main(){
     LED_init();
     button_init();
     GPIOTE_init();
+    ppi_init();
 
     
     return 0;
