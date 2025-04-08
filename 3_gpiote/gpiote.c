@@ -13,4 +13,6 @@ void GPIOTE_init(){
         GPIOTE->CONFIG[task_number] = (3 << 0) | (i << 8) | (3 << 16); // LED as EVENT and Toggle polarity
         task_number++;
     }
+    GPIOTE->EVENTS_IN[0] = 0;
+    (void)GPIOTE->EVENTS_IN[0];
 }
